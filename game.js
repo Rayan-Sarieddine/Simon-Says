@@ -36,14 +36,16 @@ function ComputerTurn(iter) {
   for (let i = 0; i < iter; i++) {
     answer.push(random());
   }
-  //2-show animation based on chosen sequence pushed into answer
-  for (let i = 0; i < answer.length; i++) {
-    setTimeout(function () {
-      animation(answer[i]);
-    }, i * 700);
-  }
+  showAnimation(answer);
 
   message.innerHTML = `Level ${level}`;
+}
+function showAnimation(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    setTimeout(() => {
+      animation(arr[i]);
+    }, i * 700);
+  }
 }
 function random() {
   let randombox = Math.trunc(Math.random() * 4) + 1;
