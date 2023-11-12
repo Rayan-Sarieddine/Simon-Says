@@ -25,7 +25,7 @@ const winMessage = "Congrats! You Won. Press Any Key to Restart";
 let answer = [];
 let userAnswer = [];
 let level = 0;
-let iter = 1;
+let NumberOfBoxes = 1;
 
 //if user starts game by clicking on body go to level 1 and remove the event handler on body
 body.addEventListener("click", first);
@@ -35,13 +35,13 @@ function first() {
 }
 
 //generate a new sequence of boxes pressed where a new box press will be added each iteration
-function levelIncrease(iter) {
+function levelIncrease(NumberOfBoxes) {
   level += 1;
 
   message.innerHTML = `Level ${level}`;
 
   answer = [];
-  for (let i = 0; i < iter; i++) {
+  for (let i = 0; i < NumberOfBoxes; i++) {
     answer.push(random());
   }
   showAnimation(answer);
@@ -121,7 +121,7 @@ function userInput(choice) {
     answer = [];
     userAnswer = [];
     level = 0;
-    iter = 1;
+    NumberOfBoxes = 1;
     body.classList.add("red");
     wrongSound.play();
     setTimeout(function () {
@@ -138,7 +138,7 @@ function userInput(choice) {
       answer = [];
       userAnswer = [];
       level = 0;
-      iter = 1;
+      NumberOfBoxes = 1;
       setTimeout(function () {
         body.addEventListener("click", first);
       }, 1000);
@@ -146,8 +146,8 @@ function userInput(choice) {
     } else {
       userAnswer = [];
       setTimeout(function () {
-        iter++;
-        levelIncrease(iter);
+        NumberOfBoxes++;
+        levelIncrease(NumberOfBoxes);
       }, 1000);
       return;
     }
