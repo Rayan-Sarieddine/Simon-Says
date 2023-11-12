@@ -27,7 +27,7 @@ let userAnswer = [];
 let level = 0;
 let iter = 1;
 
-function ComputerTurn(iter) {
+function levelIncrease(iter) {
   level += 1;
 
   message.innerHTML = `Level ${level}`;
@@ -81,9 +81,8 @@ function animation(color) {
   }, 100);
 }
 //user part
-container.addEventListener("click", function (e) {
-  const choice = e.target.classList[1];
 
+function userPart(choice) {
   const index = userAnswer.push(choice) - 1;
   document.querySelector(`#${choice}`).classList.add("pressed");
   setTimeout(function () {
@@ -128,16 +127,20 @@ container.addEventListener("click", function (e) {
       userAnswer = [];
       setTimeout(function () {
         iter++;
-        ComputerTurn(iter);
+        levelIncrease(iter);
       }, 1000);
       return;
     }
   }
-});
+}
 
 function first() {
   body.removeEventListener("click", first);
-  ComputerTurn(1);
+  levelIncrease(1);
 }
 
 body.addEventListener("click", first);
+container.addEventListener("click", function (e) {
+  const choice = e.target.classList[1];
+  userPart(choice);
+});
