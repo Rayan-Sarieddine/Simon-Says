@@ -67,15 +67,7 @@ function animation(color) {
   const box = document.querySelector(`#${color}`);
 
   box.classList.add("pressed");
-  if (box.classList.contains("green")) {
-    greenSound.play();
-  } else if (box.classList.contains("red")) {
-    redSound.play();
-  } else if (box.classList.contains("yellow")) {
-    yellowSound.play();
-  } else {
-    blueSound.play();
-  }
+  sound(box);
   setTimeout(() => {
     box.classList.remove("pressed");
   }, 100);
@@ -88,16 +80,8 @@ function userInput(choice) {
   setTimeout(function () {
     document.querySelector(`#${choice}`).classList.remove("pressed");
   }, 100);
-  const sound = document.querySelector(`#${choice}`);
-  if (sound.classList.contains("green")) {
-    greenSound.play();
-  } else if (sound.classList.contains("red")) {
-    redSound.play();
-  } else if (sound.classList.contains("yellow")) {
-    yellowSound.play();
-  } else {
-    blueSound.play();
-  }
+  const box = document.querySelector(`#${choice}`);
+  sound(box);
 
   if (userAnswer[index] !== answer[index]) {
     message.innerHTML = loseMessage;
@@ -144,3 +128,15 @@ container.addEventListener("click", function (e) {
   const choice = e.target.classList[1];
   userInput(choice);
 });
+
+function sound(box) {
+  if (box.classList.contains("green")) {
+    greenSound.play();
+  } else if (box.classList.contains("red")) {
+    redSound.play();
+  } else if (box.classList.contains("yellow")) {
+    yellowSound.play();
+  } else {
+    blueSound.play();
+  }
+}
