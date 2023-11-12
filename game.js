@@ -27,6 +27,7 @@ let userAnswer = [];
 let level = 0;
 let iter = 1;
 
+//generate a new sequence of boxes pressed where a new box press will be added each iteration
 function levelIncrease(iter) {
   level += 1;
 
@@ -40,6 +41,8 @@ function levelIncrease(iter) {
 
   message.innerHTML = `Level ${level}`;
 }
+
+//loop through the answer array to show the animation of each item in it on screen
 function showAnimation(arr) {
   for (let i = 0; i < arr.length; i++) {
     setTimeout(() => {
@@ -47,6 +50,8 @@ function showAnimation(arr) {
     }, i * 700);
   }
 }
+
+//choose a random box between the available 4 and return it
 function random() {
   let randombox = Math.trunc(Math.random() * 4) + 1;
   let translation;
@@ -63,6 +68,7 @@ function random() {
   return translation;
 }
 
+//change the background color of the box to make it look like it is pressed by user or selected by computer
 function animation(color) {
   const box = document.querySelector(`#${color}`);
 
@@ -72,8 +78,9 @@ function animation(color) {
     box.classList.remove("pressed");
   }, 100);
 }
-//user part
 
+/*storing the user's answer in his/her own sequence(userAnswer) then checking if it matches the answer strored in the computer
+generated sequence*/
 function userInput(choice) {
   const index = userAnswer.push(choice) - 1;
   document.querySelector(`#${choice}`).classList.add("pressed");
@@ -82,7 +89,7 @@ function userInput(choice) {
   }, 100);
   const box = document.querySelector(`#${choice}`);
   sound(box);
-
+  //if user answer is not correct, glow red buzz wrong, then reset the game(by adding the body click event back on it)
   if (userAnswer[index] !== answer[index]) {
     message.innerHTML = loseMessage;
     answer = [];
@@ -99,6 +106,7 @@ function userInput(choice) {
   }
 
   if (userAnswer.length == answer.length) {
+    //if user reached 10 level make him win the game and reset the game
     if (level == 10) {
       message.innerHTML = winMessage;
       answer = [];
@@ -108,6 +116,7 @@ function userInput(choice) {
       setTimeout(function () {
         body.addEventListener("click", first);
       }, 1000);
+      //if user answer is correct continue the game
     } else {
       userAnswer = [];
       setTimeout(function () {
@@ -118,18 +127,20 @@ function userInput(choice) {
     }
   }
 }
-
+//if user starts game by clicking on body go to level 1 and remove the event handler on body
 function first() {
   body.removeEventListener("click", first);
   levelIncrease(1);
 }
-
 body.addEventListener("click", first);
+
+//check what box the user clicked on
 container.addEventListener("click", function (e) {
   const choice = e.target.classList[1];
   userInput(choice);
 });
 
+//play the sound corresponding to the box color
 function sound(box) {
   if (box.classList.contains("green")) {
     greenSound.play();
