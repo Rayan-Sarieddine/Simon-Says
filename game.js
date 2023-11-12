@@ -90,6 +90,7 @@ function userInput(choice) {
     level = 0;
     iter = 1;
     body.classList.add("red");
+    wrongSound.play();
     setTimeout(function () {
       body.classList.remove("red");
       body.addEventListener("click", first);
