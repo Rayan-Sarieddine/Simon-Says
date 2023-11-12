@@ -27,6 +27,13 @@ let userAnswer = [];
 let level = 0;
 let iter = 1;
 
+//if user starts game by clicking on body go to level 1 and remove the event handler on body
+body.addEventListener("click", first);
+function first() {
+  body.removeEventListener("click", first);
+  levelIncrease(1);
+}
+
 //generate a new sequence of boxes pressed where a new box press will be added each iteration
 function levelIncrease(iter) {
   level += 1;
@@ -40,15 +47,6 @@ function levelIncrease(iter) {
   showAnimation(answer);
 
   message.innerHTML = `Level ${level}`;
-}
-
-//loop through the answer array to show the animation of each item in it on screen
-function showAnimation(arr) {
-  for (let i = 0; i < arr.length; i++) {
-    setTimeout(() => {
-      animation(arr[i]);
-    }, i * 700);
-  }
 }
 
 //choose a random box between the available 4 and return it
@@ -68,6 +66,15 @@ function random() {
   return translation;
 }
 
+//loop through the answer array to show the animation of each item in it on screen
+function showAnimation(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    setTimeout(() => {
+      animation(arr[i]);
+    }, i * 700);
+  }
+}
+
 //change the background color of the box to make it look like it is pressed by user or selected by computer
 function animation(color) {
   const box = document.querySelector(`#${color}`);
@@ -78,6 +85,25 @@ function animation(color) {
     box.classList.remove("pressed");
   }, 100);
 }
+
+//play the sound corresponding to the box color
+function sound(box) {
+  if (box.classList.contains("green")) {
+    greenSound.play();
+  } else if (box.classList.contains("red")) {
+    redSound.play();
+  } else if (box.classList.contains("yellow")) {
+    yellowSound.play();
+  } else {
+    blueSound.play();
+  }
+}
+
+//check what box the user clicked on
+container.addEventListener("click", function (e) {
+  const choice = e.target.classList[1];
+  userInput(choice);
+});
 
 /*storing the user's answer in his/her own sequence(userAnswer) then checking if it matches the answer strored in the computer
 generated sequence*/
@@ -125,30 +151,5 @@ function userInput(choice) {
       }, 1000);
       return;
     }
-  }
-}
-//if user starts game by clicking on body go to level 1 and remove the event handler on body
-function first() {
-  body.removeEventListener("click", first);
-  levelIncrease(1);
-}
-body.addEventListener("click", first);
-
-//check what box the user clicked on
-container.addEventListener("click", function (e) {
-  const choice = e.target.classList[1];
-  userInput(choice);
-});
-
-//play the sound corresponding to the box color
-function sound(box) {
-  if (box.classList.contains("green")) {
-    greenSound.play();
-  } else if (box.classList.contains("red")) {
-    redSound.play();
-  } else if (box.classList.contains("yellow")) {
-    yellowSound.play();
-  } else {
-    blueSound.play();
   }
 }
