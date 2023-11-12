@@ -82,7 +82,7 @@ function animation(color) {
 }
 //user part
 
-function userPart(choice) {
+function userInput(choice) {
   const index = userAnswer.push(choice) - 1;
   document.querySelector(`#${choice}`).classList.add("pressed");
   setTimeout(function () {
@@ -142,5 +142,5 @@ function first() {
 body.addEventListener("click", first);
 container.addEventListener("click", function (e) {
   const choice = e.target.classList[1];
-  userPart(choice);
+  userInput(choice);
 });
