@@ -34,43 +34,50 @@ function ComputerTurn(iter) {
 
   answer = [];
   for (let i = 0; i < iter; i++) {
-    //1choose random (red,blue,...)
-    let randombox = Math.trunc(Math.random() * 4) + 1;
-    let translation;
-    if (randombox == 1) {
-      translation = "green";
-    } else if (randombox == 2) {
-      translation = "red";
-    } else if (randombox == 3) {
-      translation = "yellow";
-    } else {
-      translation = "blue";
-    }
-    answer.push(translation);
+    answer.push(random());
   }
   //2-show animation based on chosen sequence pushed into answer
   for (let i = 0; i < answer.length; i++) {
     setTimeout(function () {
-      let box = document.querySelector(`#${answer[i]}`);
-      box.classList.add("pressed");
-      if (box.classList.contains("green")) {
-        greenSound.play();
-      } else if (box.classList.contains("red")) {
-        redSound.play();
-      } else if (box.classList.contains("yellow")) {
-        yellowSound.play();
-      } else {
-        blueSound.play();
-      }
-      setTimeout(function () {
-        box.classList.remove("pressed");
-      }, 100);
+      animation(answer[i]);
     }, i * 700);
   }
 
   message.innerHTML = `Level ${level}`;
 }
+function random() {
+  let randombox = Math.trunc(Math.random() * 4) + 1;
+  let translation;
+  if (randombox == 1) {
+    translation = "green";
+  } else if (randombox == 2) {
+    translation = "red";
+  } else if (randombox == 3) {
+    translation = "yellow";
+  } else {
+    translation = "blue";
+  }
 
+  return translation;
+}
+
+function animation(color) {
+  const box = document.querySelector(`#${color}`);
+
+  box.classList.add("pressed");
+  if (box.classList.contains("green")) {
+    greenSound.play();
+  } else if (box.classList.contains("red")) {
+    redSound.play();
+  } else if (box.classList.contains("yellow")) {
+    yellowSound.play();
+  } else {
+    blueSound.play();
+  }
+  setTimeout(() => {
+    box.classList.remove("pressed");
+  }, 100);
+}
 //user part
 container.addEventListener("click", function (e) {
   const choice = e.target.classList[1];
